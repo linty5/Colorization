@@ -1,0 +1,37 @@
+Traceback (most recent call last):
+  File "train.py", line 81, in <module>
+    trainer.Trainer(opt)
+  File "/media/ztt/6864FEA364FE72E4/lty/Grayscale2RGB-simulated-data-master/trainer.py", line 163, in Trainer
+    out = generator(in_img)
+  File "/home/ztt/anaconda3/lib/python3.6/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/media/ztt/6864FEA364FE72E4/lty/Grayscale2RGB-simulated-data-master/network_uresnet.py", line 66, in forward
+    E1 = self.E1(x)                                         # out: batch * 64 * 224 * 224
+  File "/home/ztt/anaconda3/lib/python3.6/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/media/ztt/6864FEA364FE72E4/lty/Grayscale2RGB-simulated-data-master/network_module.py", line 61, in forward
+    x = self.conv2d(x)
+  File "/home/ztt/anaconda3/lib/python3.6/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/ztt/anaconda3/lib/python3.6/site-packages/torch/nn/modules/conv.py", line 338, in forward
+    self.padding, self.dilation, self.groups)
+RuntimeError: Expected 4-dimensional input for 4-dimensional weight 64 1 7, but got 3-dimensional input of size [1, 366, 646] instead
+
+
+
+/home/ztt/anaconda3/lib/python3.6/site-packages/torch/nn/modules/loss.py:91: UserWarning: Using a target size (torch.Size([1, 3, 360, 640])) that is different to the input size (torch.Size([1, 2, 360, 640])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return F.l1_loss(input, target, reduction=self.reduction)
+Traceback (most recent call last):
+  File "train.py", line 81, in <module>
+    trainer.Trainer(opt)
+  File "/media/ztt/6864FEA364FE72E4/lty/Grayscale2RGB-simulated-data-master/trainer.py", line 166, in Trainer
+    L_pixel = opt.lambda_pixel * criterion_L1(out, RGBout_img)
+  File "/home/ztt/anaconda3/lib/python3.6/site-packages/torch/nn/modules/module.py", line 493, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/home/ztt/anaconda3/lib/python3.6/site-packages/torch/nn/modules/loss.py", line 91, in forward
+    return F.l1_loss(input, target, reduction=self.reduction)
+  File "/home/ztt/anaconda3/lib/python3.6/site-packages/torch/nn/functional.py", line 2230, in l1_loss
+    expanded_input, expanded_target = torch.broadcast_tensors(input, target)
+  File "/home/ztt/anaconda3/lib/python3.6/site-packages/torch/functional.py", line 62, in broadcast_tensors
+    return torch._C._VariableFunctions.broadcast_tensors(tensors)
+RuntimeError: The size of tensor a (2) must match the size of tensor b (3) at non-singleton dimension 1
