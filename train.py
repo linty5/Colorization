@@ -15,7 +15,7 @@ if __name__ == "__main__":
     parser.add_argument('--sample_path', type = str, default = './samples', help = 'training samples path that is a folder')
     parser.add_argument('--task_name', type = str, default = 'colorization', help = 'task name')
     parser.add_argument('--save_mode', type = str, default = 'epoch', help = 'saving mode, and by_epoch saving is recommended')
-    parser.add_argument('--save_by_epoch', type = int, default = 5, help = 'interval between model checkpoints (by epochs)')
+    parser.add_argument('--save_by_epoch', type = int, default = 50, help = 'interval between model checkpoints (by epochs)')
     parser.add_argument('--save_by_iter', type = int, default = 10000, help = 'interval between model checkpoints (by iterations)')
     parser.add_argument('--finetune_path', type = str, default = '', help = 'load the pre-trained model with certain epoch, None for pre-training')
     # GPU parameters
@@ -23,7 +23,7 @@ if __name__ == "__main__":
     parser.add_argument('--gpu_ids', type = str, default = '0, 1, 2, 3', help = 'gpu_ids: e.g. 0  0,1  0,1,2  use -1 for CPU')
     parser.add_argument('--cudnn_benchmark', type = bool, default = True, help = 'True for unchanged input data type')
     # Training parameters
-    parser.add_argument('--epochs', type = int, default = 30, help = 'number of epochs of training')
+    parser.add_argument('--epochs', type = int, default = 500, help = 'number of epochs of training')
     parser.add_argument('--train_batch_size', type = int, default = 1, help = 'size of the training batches for single GPU')
     parser.add_argument('--val_batch_size', type = int, default = 1, help = 'size of the validation batches for single GPU')
     parser.add_argument('--lr_g', type = float, default = 0.0001, help = 'Adam: learning rate for G')
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     parser.add_argument('--net_mode', type = str, default = 'uresnet', help = 'task name for loading networks')
     parser.add_argument('--pad', type = str, default = 'zero', help = 'pad type of networks')
     parser.add_argument('--activ', type = str, default = 'lrelu', help = 'activation type of networks')
-    parser.add_argument('--norm', type = str, default = 'none', help = 'normalization type of networks')
+    parser.add_argument('--norm', type = str, default = 'bn', help = 'normalization type of networks')
     parser.add_argument('--in_channels', type = int, default = 1, help = '1 for colorization, 3 for other tasks')
     parser.add_argument('--out_channels', type = int, default = 3, help = '2 for colorization, 3 for other tasks')
     parser.add_argument('--start_channels', type = int, default = 64, help = 'start channels for the main stream of generator')
@@ -60,21 +60,21 @@ if __name__ == "__main__":
     parser.add_argument('--RGBout_path_train', type = str, \
         default = '/media/ztt/6864FEA364FE72E4/lty/train_rgb', help = 'target baseroot')
     parser.add_argument('--in_path_val', type = str, \
-        default = '/media/ztt/6864FEA364FE72E4/lty/test_rgb', help = 'input baseroot')
+        default = '/media/ztt/6864FEA364FE72E4/lty/try_test', help = 'input baseroot')
     parser.add_argument('--RGBout_path_val', type = str, \
-        default = '/media/ztt/6864FEA364FE72E4/lty/test_rgb', help = 'target baseroot')
+        default = '/media/ztt/6864FEA364FE72E4/lty/try_test', help = 'target baseroot')
     parser.add_argument('--in_path_sample', type = str, \
         default = '/media/ztt/6864FEA364FE72E4/lty/test_rgb_l', help = 'sample baseroot')
     parser.add_argument('--RGBout_path_sample', type = str, \
         default = '/media/ztt/6864FEA364FE72E4/lty/test_rgb_l', help = 'target baseroot')
     parser.add_argument('--sample_image', type = str, \
-        default = '/media/ztt/6864FEA364FE72E4/lty/test_rgb_l/clip842_0.png', help = 'target baseroot')
+        default = '/media/ztt/6864FEA364FE72E4/lty/test_rgb_l', help = 'target baseroot')
     parser.add_argument('--divide_rate', type = float, default = 0.05, help = 'validation set rate')
     parser.add_argument('--shuffle', type = bool, default = True, help = 'the training and validation set should be shuffled')
     parser.add_argument('--color_bias_aug', type = bool, default = False, help = 'whether to perform color bias aug')
     parser.add_argument('--color_bias_level', type = bool, default = 0.05, help = 'color bias level')
     parser.add_argument('--noise_aug', type = bool, default = True, help = 'whether to perform noise aug')
-    parser.add_argument('--noise_level', type = str, default = 0.01, help = 'Gaussian noise level')
+    parser.add_argument('--noise_level', type = str, default = 0, help = 'Gaussian noise level')
     parser.add_argument('--random_crop', type = bool, default = True, help = 'random crop size')
     parser.add_argument('--crop_size', type = int, default = 256, help = 'single patch size')
     opt = parser.parse_args()

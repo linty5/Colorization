@@ -162,9 +162,13 @@ def Trainer(opt):
             # A is for input image, B is for target image
             in_img = in_img.cuda()
             RGBout_img = RGBout_img.cuda()
+            #print("***in_img***", in_img)
 
             # Forward propagation
             out = generator(in_img)
+            #out = out * 255
+            #print("***out***", out)
+            #print("***RGBout_img***", RGBout_img)
             # Pixel loss
             L_pixel = opt.lambda_pixel * criterion_L1(out, RGBout_img)
 
@@ -197,19 +201,24 @@ def Trainer(opt):
             # Learning rate decrease at certain epochs
             adjust_learning_rate(opt, (epoch + 1), iters_done, optimizer_G)
 
-        save_sample_folder = os.path.join(sample_folder, 'train_epoch%d' % (epoch + 1))
-        if not os.path.exists(save_sample_folder):
-            os.makedirs(save_sample_folder)
 		
         ### Sample data every epoch
         if (epoch + 1) % 1 == 0:
+            save_sample_folder = os.path.join(sample_folder, 'train_epoch%d' % (epoch + 1))
+            if not os.path.exists(save_sample_folder):
+                os.makedirs(save_sample_folder)
             for i, (in_img, RGBout_img) in enumerate(val_loader):
                 in_img = in_img.cuda()
                 RGBout_img = RGBout_img.cuda()
                 out = generator(in_img)
-                img_list = [out, RGBout_img]
-                name_list = ['pred', 'gt']
+                #out = out * 255
+                #print("***in_img***", in_img)
+                #print("***out***", out)
+                #print("***RGBout_img***", RGBout_img)
+                img_list = [in_img, out, RGBout_img]
+                name_list = ['gray', 'pred', 'gt']
                 utils.save_sample_png(sample_folder = save_sample_folder, sample_name = 'image_%d' % (i + 1), img_list = img_list, name_list = name_list, pixel_max_cnt = 255)
+                #utils.save_sample_png_test(sample_folder = save_sample_folder, sample_name = 'result_%d' % (i + 1), img_list = img_list, name_list = name_list, pixel_max_cnt = 255)
 
         ### Validation
         val_PSNR = 0
@@ -225,7 +234,7 @@ def Trainer(opt):
             # Forward propagation
             with torch.no_grad():
                 out = generator(in_img)
-
+            #out = out * 255
             # Accumulate num of image and val_PSNR
             num_of_val_image += in_img.shape[0]
             val_PSNR += utils.psnr(out, RGBout_img, 1) * in_img.shape[0]

@@ -78,6 +78,7 @@ def save_sample_png(sample_folder, sample_name, img_list, name_list, pixel_max_c
         img = img_list[i]
         # Recover normalization: * 255 because last layer is sigmoid activated
         img = img * 255
+        #print('********',img)
         # Process img_copy and do not destroy the data of img
         img_copy = img.clone().data.permute(0, 2, 3, 1).cpu().numpy()
         img_copy = np.clip(img_copy, 0, pixel_max_cnt)

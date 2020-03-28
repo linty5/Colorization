@@ -56,12 +56,11 @@ class Qbayer2RGB_dataset(Dataset):
         in_img = cv2.cvtColor(RGBout_img, cv2.COLOR_RGB2GRAY)
             
         # Normalize
-        #print("***RGBout_img***",RGBout_img)
         in_img = in_img.astype(np.float) / 255.0
         RGBout_img = RGBout_img.astype(np.float) / 255.0
         
         # Gamma correction
-	#in_img = in_img ** (1 / 2.2)
+	    #in_img = in_img ** (1 / 2.2)
         # Data augmentation
         # color bias
         if self.opt.color_bias_aug:
@@ -86,6 +85,7 @@ class Qbayer2RGB_dataset(Dataset):
             in_img = np.clip(in_img, 0, 1)
         # To tensor
         in_img = in_img[:, :, np.newaxis]
+        #print("***in_img__getitem__***",in_img)
         RGBout_img = torch.from_numpy(RGBout_img).float().permute(2, 0, 1).contiguous()
         #print("***RGBout_img shape***",RGBout_img.shape)
         in_img = torch.from_numpy(in_img).float().permute(2, 0, 1).contiguous()
